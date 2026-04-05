@@ -33,8 +33,8 @@ functions/_html-template.js
 functions/_episodes.js
 functions/_config.js
 
-# Build-generated (RSS)
-episodes/rss.xml
+# Build-generated (RSS) — public/ is a build copy; episodes/rss.xml is
+# the committed canonical source (read back next run to preserve pubDates).
 public/rss.xml
 
 # Generated data (rebuilt by scripts/yaml-to-json.js)

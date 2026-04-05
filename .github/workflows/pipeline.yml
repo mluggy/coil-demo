@@ -91,7 +91,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add episodes/*.mp3 episodes/*.srt episodes/*.png episodes/rss.xml episodes/episodes.yaml
+          git add episodes/*.mp3 episodes/*.srt episodes/*.txt episodes/*.png episodes/rss.xml episodes/episodes.yaml
           git diff --cached --quiet || git commit -m "Auto-process episodes [skip ci]"
           git add -u episodes/*.wav 2>/dev/null || true
           git diff --cached --quiet || git commit -m "Remove converted WAV files [skip ci]"
