@@ -24,7 +24,7 @@ body:
     id: version
     attributes:
       label: coil commit / version
-      description: `git rev-parse HEAD` or the tag you're on.
+      description: "`git rev-parse HEAD` or the tag you're on."
     validations:
       required: false
   - type: dropdown

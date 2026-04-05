@@ -1,11 +1,10 @@
-# coil
+# 🎙️ coil
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![CI](https://github.com/mluggy/coil/actions/workflows/pipeline.yml/badge.svg)](https://github.com/mluggy/coil/actions/workflows/pipeline.yml)
+Self-hosted podcast platform: drop a WAV, push, and get the whole thing around it — a production podcast website with player, search, transcripts, analytics, OG images, RSS, and a CDN-deployed site.
 
-Self-hosted podcast platform. Drop a WAV, push, get a podcast.
-
-**Live demos:** [coil-sample.lugassy.net](https://coil-sample.lugassy.net) (English) · [podcast.lugassy.net](https://podcast.lugassy.net) (Hebrew, RTL)
+**Demos:**
+- [English](https://coil-sample.lugassy.net)
+- [Hebrew](https://podcast.lugassy.net) (RTL)
 
 <p align="center">
   <a href=".github/screenshot.png"><img src=".github/screenshot.png" alt="coil screenshot" width="640"></a>
@@ -19,10 +18,13 @@ An end-to-end podcast pipeline triggered by a git push:
 - **Auto-transcription** to SRT subtitles (AWS Transcribe)
 - **AI subtitle correction** (Google Gemini)
 - **RSS feed** generation with iTunes/Spotify metadata
-- **React website** with player, search, subtitles, and per-episode OG images
+- **React website** with per-episode pages, OG images, sitemap, and SSR for crawlers
+- **Player** with variable speed (0.8×–2×), closed captions, seek, keyboard shortcuts, and persistent preferences
+- **Full-text search** across episode titles, descriptions, and transcripts
+- **Analytics** — Google Analytics + Meta Pixel with event tracking (plays, seeks, downloads, subscribes, shares, searches, external clicks)
+- **Cookie consent** banner with terms & privacy pages, all configurable
+- **Caching** — long-lived media, SWR HTML, immutable build assets — tuned for Cloudflare's edge
 - **CDN deploy** to Cloudflare Pages with media served from R2
-
-All steps are optional and degrade gracefully. At minimum, you get an MP3 and a website.
 
 ## Architecture
 
@@ -51,7 +53,7 @@ The pipeline runs Python + Node scripts, commits generated artifacts back to the
 7. **Replace or start fresh with the demo episode**:
    - **Keep episode 1**: overwrite `episodes/s1e1.wav` with your own audio and update the episode entry in `episodes/episodes.yaml`.
    - **Start fresh**: delete `episodes/s1e1.*`, reset `episodes/episodes.yaml` to `episodes: {}`, then drop your first WAV as `episodes/s{season}e{episode}.wav`.
-8. **Configure GitHub secrets** (see [Secrets](#github-secrets) — minimum required: `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`).
+8. **Configure GitHub secrets** (see [Secrets](#github-secrets) — minimum required: Cloudflare API token + account ID and the four `R2_*` keys).
 9. **Push** — the pipeline converts, transcribes, builds, and deploys.
 
 First run typically takes 2–8 minutes depending on episode size and whether transcription runs.
@@ -75,7 +77,7 @@ R2 is free up to 10 GB storage + unlimited egress. Pages is free up to 500 build
 **Credentials to grab:**
 - **Account ID** — Cloudflare dashboard sidebar.
 - **API token** — Dashboard → My Profile → API Tokens → Create Token → "Edit Cloudflare Workers" template (or custom with *Account → Cloudflare Pages → Edit* + *Account → Workers R2 Storage → Edit*).
-- **R2 access keys** (optional, only needed to sync media from CI) — Dashboard → R2 → Manage R2 API Tokens → Object Read & Write.
+- **R2 access keys** — Dashboard → R2 → Manage R2 API Tokens → Object Read & Write. Required so the pipeline can sync MP3/SRT files from CI to your bucket (the deployed site reads them back via the R2 binding).
 
 ## GitHub Secrets
 
@@ -84,23 +86,23 @@ Secrets live in **Settings → Secrets and variables → Actions → New reposit
 > **Workflow permissions:** the pipeline commits processed episodes back to your repo. Go to *Settings → Actions → General → Workflow permissions* → **Read and write permissions**. New forks default to read-only and will fail at `git push`.
 
 | Secret | Required? | What happens without it |
-|---|---|---|
+|:---|:---|:---|
 | `CLOUDFLARE_API_TOKEN` | ✅ | Site not deployed |
 | `CLOUDFLARE_ACCOUNT_ID` | ✅ | Site not deployed |
+| `R2_ACCESS_KEY_ID` | ✅ | Media not synced to R2 → 404s on deployed site |
+| `R2_SECRET_ACCESS_KEY` | ✅ | Media not synced to R2 → 404s on deployed site |
+| `R2_ENDPOINT_URL` | ✅ | Media not synced to R2 → 404s on deployed site |
+| `R2_BUCKET` | ✅ | Media not synced to R2 → 404s on deployed site |
 | `AWS_ACCESS_KEY_ID` | ❌ | Transcription skipped |
 | `AWS_SECRET_ACCESS_KEY` | ❌ | Transcription skipped |
 | `AWS_REGION` | ❌ | Transcription skipped |
 | `AWS_S3_BUCKET` | ❌ | Transcription skipped (S3 is Transcribe's staging area) |
 | `GEMINI_API_KEY` | ❌ | Raw Transcribe SRT used as-is |
-| `R2_ACCESS_KEY_ID` | ❌ | Media not synced to R2 |
-| `R2_SECRET_ACCESS_KEY` | ❌ | Media not synced to R2 |
-| `R2_ENDPOINT_URL` | ❌ | Media not synced to R2 |
-| `R2_BUCKET` | ❌ | Media not synced to R2 |
 
 **Repository variable** (Settings → Secrets and variables → Actions → Variables tab):
 
 | Variable | Required? | Purpose |
-|---|---|---|
+|:---|:---|:---|
 | `CLOUDFLARE_PROJECT_NAME` | ✅ | Must match `name` in `wrangler.toml` and your Pages project |
 
 **Where to get credentials:**
@@ -114,11 +116,11 @@ Note: transcription also requires `transcribe: true` in `podcast.yaml`.
 
 After your first successful deploy, your site is at `https://your-pages-project.pages.dev` (or your custom domain). Your feed is at `/rss.xml`.
 
-- **Apple Podcasts**: [Podcasts Connect](https://podcastsconnect.apple.com) → New Show → paste your RSS URL.
 - **Spotify**: [Spotify for Podcasters](https://podcasters.spotify.com) → Add or claim podcast → paste RSS URL.
-- **Amazon Music / YouTube Music**: similar flows via their creator portals.
+- **Apple Podcasts**: [Podcasts Connect](https://podcastsconnect.apple.com) → New Show → paste your RSS URL.
+- **YouTube Music / Amazon Music**: similar flows via their creator portals.
 
-After approval, add the returned IDs to `podcast.yaml` (`apple_podcasts_id`, `spotify_id`, etc.) and each episode's `apple_id`/`spotify_id`/`amazon_id`/`youtube_id` for deep linking.
+After approval, add the returned IDs to `podcast.yaml` (`spotify_id`, `apple_podcasts_id`, etc.) and each episode's `spotify_id`/`apple_id`/`youtube_id`/`amazon_id` for deep linking.
 
 **Setting `podcast_guid` — do this before first publish.** Generate a UUIDv4 at [uuidgenerator.net/version4](https://www.uuidgenerator.net/version4) and set `podcast_guid` in `podcast.yaml`. This gives your show a stable identifier across feed URL changes. If migrating from another platform, **copy the existing `<podcast:guid>` instead** (see next section).
 
@@ -195,13 +197,13 @@ Generates `episodes/episodes.yaml` with all metadata including GUIDs (critical f
 1. Verify GUIDs in `episodes.yaml` match your old feed.
 2. Copy your old `<podcast:guid>` value into `podcast_guid` in `podcast.yaml`.
 3. Set `legacy_slug_pattern` in `podcast.yaml` if your old URLs used slugs (Transistor example: `"/episodes/.+-(\\d+)$"`).
-4. After deploying, update your RSS URL in Apple Podcasts Connect and other directories. Most follow 301 redirects.
-5. Add `apple_id`/`spotify_id`/`amazon_id`/`youtube_id` to each episode for deep linking.
+4. After deploying, update your RSS URL in Spotify, Apple Podcasts Connect, and other directories. Most follow 301 redirects.
+5. Add `spotify_id`/`apple_id`/`youtube_id`/`amazon_id` to each episode for deep linking.
 
 **Where to find your RSS feed URL:**
 
 | Platform | Location |
-|---|---|
+|:---|:---|
 | Anchor / Spotify for Podcasters | Settings → Distribution → RSS feed |
 | Transistor | Dashboard → Show Settings → RSS feed |
 | Podbean | Settings → Feed → RSS feed URL |
@@ -221,8 +223,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for script breakdown, SSR verification, a
 
 Real-world podcasts running on coil:
 
-- **[coil-sample.lugassy.net](https://coil-sample.lugassy.net)** — English reference/demo site maintained by the coil author. Useful as a reference config when adding new fields. Source: [mluggy/coil-sample](https://github.com/mluggy/coil-sample).
-- **[podcast.lugassy.net](https://podcast.lugassy.net)** — Hebrew RTL podcast. AWS Transcribe + Gemini correction, migrated from Transistor via `legacy_slug_pattern`. Source: [mluggy/podcast](https://github.com/mluggy/podcast).
+- **[coil-sample.lugassy.net](https://coil-sample.lugassy.net)** — English reference/demo site maintained by the coil author. [[Source](https://github.com/mluggy/coil-sample)]
+- **[podcast.lugassy.net](https://podcast.lugassy.net)** — Hebrew RTL podcast, AWS Transcribe + Gemini correction, migrated from Transistor. [[Source](https://github.com/mluggy/podcast)]
 
 Running coil? Open a PR adding your site (one line: link + what's interesting about your setup).
 
