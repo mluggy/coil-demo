@@ -357,11 +357,6 @@ def write_feed(episodes_dir, episodes, last_build, config):
     rss_content = '\n'.join(lines) + '\n'
     with open(xml_path, 'w', encoding='utf-8') as f:
         f.write(rss_content)
-    # Also write to public/ so Vite copies it to dist/
-    public_dir = project_root() / 'public'
-    public_dir.mkdir(exist_ok=True)
-    with open(public_dir / 'rss.xml', 'w', encoding='utf-8') as f:
-        f.write(rss_content)
 
     print(f"Generated {xml_path} with {len(episodes)} episodes", file=sys.stderr)
 
