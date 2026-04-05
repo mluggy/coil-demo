@@ -1,0 +1,345 @@
+# =============================================================================
+# Podcast Configuration
+# =============================================================================
+# This file is the single source of truth for all podcast metadata.
+# It drives the website, RSS feed, OG images, and build scripts.
+# Edit values here - they propagate everywhere automatically.
+#
+# Minimal setup: fill in title, description, author, owner_email, language,
+# and country. Everything else has sensible defaults. The canonical URL is
+# derived from the incoming request at serve time - no site_url needed.
+
+# -- Show metadata --
+# Podcast name - shown in the header, RSS feed, downloaded files, and
+# browser tab.
+title: Your Podcast
+
+# Short tagline - appears under the title and in meta description tags.
+description: A podcast about interesting things
+
+# Host name - used in RSS <itunes:author>, JSON-LD, and the site footer.
+author: Your Name
+
+# Required by Apple Podcasts for the <itunes:owner> RSS tag.
+# This email is not displayed publicly on the site.
+owner_email: you@example.com
+
+# Path to the podcast cover art. Apple Podcasts requires minimum 1400×1400.
+# Favicons and icon sizes are auto-generated from this image on each build.
+cover: /cover.png
+
+# -- Language & region --
+# BCP-47 language code - sets <html lang>, RSS <language>, and JSON-LD.
+# Text direction (RTL/LTR) is auto-detected from this value.
+# RTL is applied for: he, ar, fa, ur, yi, ps, sd, ckb, syr.
+# Examples: en, he, ar, fr, de, ja, zh
+language: en
+
+# ISO 3166-1 alpha-2 country code - used to derive og:locale (e.g. en_US)
+# and Apple Podcasts episode URLs (e.g. podcasts.apple.com/us/...).
+# Examples: US, IL, GB, DE, FR, JP
+country: US
+
+# -- Legal --
+# Shown in the site footer and RSS <copyright> tag.
+copyright: CC BY 4.0
+
+# Apple Podcasts advisory - true marks the entire show as explicit.
+explicit: false
+
+# -- RSS feed settings --
+# "episodic" (standalone episodes, newest first) or
+# "serial" (sequential, oldest first).
+itunes_type: episodic
+
+# Permanent GUID for the podcast (Podcast Index / podcast:guid tag).
+# ⚠️  IMPORTANT - SET THIS BEFORE YOU PUBLISH. Leaving it empty omits the
+# <podcast:guid> tag entirely, which means apps have no stable identifier
+# for your show. If your feed URL ever changes, apps may treat the feed as
+# a brand-new podcast and your subscribers will be orphaned.
+#
+# 🚨 MIGRATING FROM ANOTHER PLATFORM? This is CRITICAL. If your old feed
+# already exposes a <podcast:guid>, you MUST copy that exact value here -
+# otherwise Podcast Index-aware apps (Fountain, Podverse, PodcastGuru, etc.)
+# will disconnect existing subscribers from your show history. Check your
+# old feed's <channel> for a <podcast:guid>...</podcast:guid> tag first.
+#
+# If you have no prior GUID, generate a fresh UUIDv4 at:
+# https://www.uuidgenerator.net/version4
+# Once set and published, NEVER change it.
+podcast_guid: ""
+
+# Apple Podcasts categories for directory placement.
+# Browse: https://podcasters.apple.com/support/1691-apple-podcasts-categories
+# Use a plain string for top-level, or Category: Subcategory for nested:
+# - Technology
+# - News: Tech News
+# - Business: Tech
+itunes_categories:
+  - Technology
+
+# -- Platform links --
+# These appear as icons in the header and in the JSON-LD sameAs array.
+# Leave empty or remove a line to hide that platform icon.
+
+# Spotify show ID - the last part of your Spotify show URL:
+# open.spotify.com/show/{THIS_ID}. Used to construct the show URL and
+# header icon link automatically.
+spotify_id: ""
+
+# Numeric Apple Podcasts ID - used to construct the show URL and
+# per-episode deep links automatically. Find it in your Apple Podcasts
+# Connect dashboard or in the show URL: podcasts.apple.com/.../id{THIS_NUMBER}
+apple_podcasts_id: ""
+
+# YouTube playlist ID - the value after "list=" in a playlist URL:
+# youtube.com/playlist?list={THIS_ID}. Used to construct the show URL.
+# Per-episode deep links use the episode's youtube_id from episodes.yaml
+# to link to the specific video within this playlist.
+youtube_id: ""
+
+# Amazon Music podcast ID - the last part of your Amazon URL:
+# music.amazon.com/podcasts/{THIS_ID}. Used to construct the show URL
+# and header icon link automatically.
+amazon_music_id: ""
+
+# -- Social links --
+# Shown as icons in the site footer and included in JSON-LD sameAs.
+# Leave empty to hide.
+
+# X/Twitter handle without the @ sign (e.g. "mluggy"). Used to construct
+# the profile URL and twitter:site meta tag.
+x_username: ""
+
+# Facebook page or profile username (e.g. "mluggy"). The part after
+# facebook.com/ in your page URL. Also enables Facebook share buttons
+# on episodes.
+facebook_username: ""
+
+# Instagram handle without the @ sign (e.g. "mluggy").
+instagram_username: ""
+
+# TikTok handle without the @ sign (e.g. "mluggy").
+tiktok_username: ""
+
+# Full URL to your LinkedIn profile or page
+# (e.g. "https://www.linkedin.com/in/mluggy/").
+linkedin_url: ""
+
+# -- Player defaults --
+# Initial playback speed when a listener first visits the site. They can
+# change it via the speed button; their choice is saved in localStorage.
+# Available speeds: 0.8, 1, 1.2, 1.5, 2
+default_speed: 1.2
+
+# Whether subtitles (closed captions) are on by default on first visit.
+# Users can toggle via the CC button; their choice is saved in localStorage.
+default_cc: true
+
+# -- Share platforms --
+# Which share buttons to show. Buttons appear in the order listed here.
+# Available: twitter, linkedin, facebook, whatsapp, telegram, email, copy
+share:
+  - twitter
+  - linkedin
+  - copy
+
+# -- Funding --
+# Link to a sponsorship/donation page (GitHub Sponsors, Patreon, etc.).
+# Shows as a heart icon in the site footer and in the RSS <podcast:funding>
+# tag. The label for the RSS feed lives in labels.funding below. Leave
+# empty to disable.
+funding_url: https://github.com/sponsors/mluggy
+
+# -- Transcription --
+# When true, the CI pipeline runs AWS Transcribe on new episodes that don't
+# have an existing .srt file. Requires AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY,
+# AWS_REGION, and AWS_S3_BUCKET to be set as GitHub repository secrets.
+# The transcription language is derived automatically from language + country
+# above (e.g. language: en + country: US → en-US).
+transcribe: true
+
+# Gemini model used to correct AWS Transcribe output (runs only when
+# GEMINI_API_KEY is set and a new SRT was generated). Preview models are
+# updated often; if you see "model not found" errors, bump this to whatever
+# is current at https://ai.google.dev/gemini-api/docs/models
+gemini_model: gemini-3.1-pro-preview
+
+# -- Analytics --
+# Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX).
+# Leave empty to disable.
+GA_MEASUREMENT_ID: ""
+
+# Facebook/Meta Pixel ID (e.g. 123456789).
+# Leave empty to disable.
+FB_PIXEL_ID: ""
+
+# -- Fonts --
+# Google Fonts family name for body text.
+# Browse https://fonts.google.com to pick a font.
+# For non-Latin scripts, use the appropriate Noto variant:
+#   Hebrew: "Noto Sans Hebrew"
+#   Arabic: "Noto Sans Arabic"
+#   Japanese: "Noto Sans JP"
+#   Chinese (Simplified): "Noto Sans SC"
+#   Korean: "Noto Sans KR"
+#   Thai: "Noto Sans Thai"
+font: Noto Sans Hebrew
+
+# -- OG image font (optional override) --
+# Satori (the OG image generator) needs a static .ttf file. By default the
+# font named above is downloaded from Google Fonts on first build and cached
+# to scripts/fonts/ - no config needed. Only set og_font to override with a
+# specific local .ttf (e.g. a custom weight/variant, or to skip the fetch).
+og_font: ""
+
+# -- OG image text area --
+# Rectangle (in pixels on the 1200x630 OG canvas) where episode titles are
+# drawn over the cover art background. Adjust to match your cover art
+# layout.
+# align: horizontal text alignment - "left", "center", or "right".
+# Automatically follows text direction (RTL/LTR) so "left" means "start"
+# and "right" means "end" regardless of language.
+# valign: vertical text alignment - "top", "middle", or "bottom".
+og_text_area:
+  top: 550
+  left: 50
+  width: 1300
+  height: 770
+  align: center
+  valign: middle
+
+# -- OG image text color --
+# Color of the episode title overlay. Any valid CSS color (hex, rgb, etc.).
+# Defaults to white if unset.
+og_text_color: "#ffffff"
+
+# -- Theme --
+# Brand color - used for buttons, active states, progress bar, equalizer,
+# and OG images. Any valid CSS hex color.
+accent_color: "#ff4d00"
+
+# Initial color scheme - "dark" or "light".
+# Users can toggle via the sun/moon icon; their choice is saved in a cookie.
+# If unset, follows the OS preference (prefers-color-scheme).
+default_theme: dark
+
+# Page background color for each theme.
+bg_dark: "#0a0a0b"
+bg_light: "#fafaf9"
+
+# Card and panel background - slightly offset from the page background to
+# create depth (header, footer, player, episode cards).
+surface_dark: "#131315"
+surface_light: "#ffffff"
+
+# -- Legacy URL redirects (optional) --
+# If migrating from another platform (Transistor, Anchor, Buzzsprout, etc.),
+# set a JavaScript regex that captures the episode number from old URLs. The
+# middleware matches incoming /episodes/... paths and 301-redirects to /{N},
+# where {N} is capture group 1. Non-matching /episodes/... paths redirect to /.
+#
+# The regex runs against the URL-decoded path (including "/episodes/").
+# Quote with double quotes and escape backslashes: "\\d+" - NOT "\d+".
+# Capture group 1 MUST be the episode number.
+#
+# Single-platform examples:
+#   Transistor, trailing number     "/episodes/.+-(\\d+)$"
+#       /episodes/my-great-show-34      → /34
+#   Transistor, zero-padded number  "/episodes/.+-0*(\\d+)$"
+#       /episodes/my-great-show-002   → /2  (0* eats leading zeros)
+#   Transistor, leading number      "/episodes/(\\d+)-"
+#       /episodes/34-my-great-show      → /34
+#   Hebrew "פרק" (episode) prefix   "/episodes/פרק-(\\d+)"
+#       /episodes/פרק-34-שם-הפרק        → /34
+#   Buzzsprout (showid-epnum-slug)  "/episodes/\\d+-(\\d+)-"
+#       /episodes/123456-34-my-show     → /34
+#   Podbean "ep-N-" style           "/episodes/ep-(\\d+)-"
+#       /episodes/ep-34-my-show         → /34
+#   Simplecast short-id             "/episodes/[a-z0-9]+-(\\d+)$"
+#       /episodes/abc123-34             → /34
+#
+# Leave empty to disable.
+legacy_slug_pattern: ""
+
+# -- Search ranking weights --
+# Controls BM25 field boosting for full-text search (powered by Orama).
+# Higher values make matches in that field rank higher in results.
+search_weights:
+  title: 10
+  description: 5
+  transcript: 2
+
+# =============================================================================
+# UI Labels (for localization)
+# =============================================================================
+# All user-visible strings live here so the app can be fully localized by
+# replacing the values below. Keys are referenced as config.labels.<key>.
+#
+# For a Hebrew example, see: https://github.com/mluggy/podcast/blob/main/podcast.yaml
+labels:
+  # Platform names (shown next to icons in header and player)
+  spotify: Spotify
+  apple: Apple
+  youtube: YouTube
+  amazon: Amazon
+  rss: RSS
+
+  # Navigation
+  season: Season
+  episode: Episode
+  new: New
+  search: Search all episodes
+  no_results: No episodes found
+
+  # Player controls
+  play: Play
+  pause: Pause
+  previous_episode: Previous episode
+  next_episode: Next episode
+  skip_back: 15 seconds back
+  skip_forward: 15 seconds forward
+  subtitles: Subtitles
+  playback_speed: Playback speed
+  download: Download
+
+  # Theme toggle
+  light_mode: Light mode
+  dark_mode: Dark mode
+
+  # Sharing (shown in episode detail and episode list)
+  share: Share
+  copy_link: Copy link
+
+  # Footer - leave powered_by empty ("") to hide the "powered by coil" link.
+  powered_by: powered by
+
+  # Label for the funding link in the RSS <podcast:funding> tag (not
+  # shown on the site). Only used when funding_url is set.
+  funding: Support this podcast
+
+  # Keyboard shortcut for search: Ctrl/Cmd + this key (in addition to F).
+  # Useful for non-Latin keyboards where Ctrl+F may map to a different character.
+  # Example: "כ" for Hebrew. Leave empty if not needed.
+  search_shortcut: ""
+
+  # Legal pages - omit any of the four keys below to hide that page and its
+  # footer link. Setting only the title (not the _text) still hides the page.
+  terms: Terms
+  terms_text: |
+    This is a personal, educational podcast provided free of charge and without warranty of any kind. Content reflects the opinions of the host(s) and guests and is provided for informational purposes only - it is not professional, legal, medical, financial, or any other kind of advice.
+
+    By using this site you agree that the operators are not liable for any decisions you make based on the content. You may listen, share, and reference episodes for personal and educational use. Trademarks and third-party content remain the property of their owners.
+  privacy: Privacy
+  privacy_text: |
+    We respect your privacy. This site does not require an account and does not collect personal information you do not voluntarily provide. A small cookie stores your theme (light/dark) and, if shown, your cookie-consent choice.
+
+    If you accept analytics, Google Analytics sets cookies to measure aggregate, anonymized traffic such as pages viewed, session duration, and approximate region. The Meta (Facebook) Pixel records anonymized site activity for audience measurement.
+
+    We do not sell data. You can revoke consent at any time by clearing cookies for this site. For questions contact the author.
+
+  # Cookie consent - leave cookie_consent empty ("") to disable the banner
+  # entirely and always-track (current behavior).
+  cookie_consent: This site uses cookies for analytics. Do you accept?
+  cookie_accept: Accept
+  cookie_decline: Decline

@@ -1,0 +1,50 @@
+name: Frozen files guard
+
+# Blocks any PR that modifies files the upstream coil repo has promised
+# to never edit after v1.0. Those files are owned by user forks — editing
+# them here would create merge conflicts (or silent data loss) for every
+# fork that syncs from upstream.
+#
+# If you genuinely need to edit one of these files (e.g. a critical bug
+# fix in the demo), override with a manual workflow dispatch or document
+# the exception in the PR body and request a code-owner override.
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify frozen files untouched
+        run: |
+          FROZEN=(
+            "podcast.yaml"
+            "episodes/episodes.yaml"
+            "episodes/s1e1.mp3"
+            "episodes/s1e1.srt"
+            "episodes/s1e1.txt"
+            "episodes/s1e1.png"
+            "public/cover.png"
+            "wrangler.toml"
+          )
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          FAIL=0
+          for f in "${FROZEN[@]}"; do
+            if echo "$CHANGED" | grep -qxF "$f"; then
+              echo "::error file=$f::Frozen file modified. These files ship once at v1.0 and must not be edited upstream — users would get merge conflicts on sync. See CONTRIBUTING.md for the freeze contract."
+              FAIL=1
+            fi
+          done
+          if [ $FAIL -eq 1 ]; then
+            echo ""
+            echo "Frozen file list is defined in .github/workflows/frozen-files-guard.yml"
+            echo "and mirrored in .gitattributes (merge=ours entries)."
+            exit 1
+          fi
+          echo "OK — no frozen files were modified."
