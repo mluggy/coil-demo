@@ -212,6 +212,8 @@ function EpisodeRow({ ep, i, playing, isPlaying, onPlay, onSelect, newestEpisode
                       borderRadius: 6,
                       marginInlineStart: 6,
                       verticalAlign: "middle",
+                      position: "relative",
+                      top: -1,
                     }}
                   >
                     {L.new}

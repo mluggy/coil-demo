@@ -34,7 +34,7 @@ coil evolves — you'll want to add new features that need new `podcast.yaml` fi
 - **Never edit `podcast.yaml` upstream.** It's frozen.
 - **Add the new field's logic to code** (`scripts/derive-config.js`, `scripts/generate_feed.py`, `functions/_middleware.js`, etc.) with a safe default for when the field is absent.
 - **Document the new field in the GitHub Release notes**: "v1.x adds optional field `foo` to `podcast.yaml`, defaults to X. Add `foo: Y` to your config to override."
-- **Update [mluggy/coil-sample](https://github.com/mluggy/coil-sample)** (the English reference site, deployed to coil-sample.lugassy.net) to demonstrate the new field in a live config.
+- **Update [mluggy/coil-demo](https://github.com/mluggy/coil-demo)** (the English reference site, deployed to coil-demo.lugassy.net) to demonstrate the new field in a live config.
 
 Users who want the new feature add the field to their own `podcast.yaml`. Users who don't, do nothing — their existing config keeps working because the code defaults are safe.
 
