@@ -225,10 +225,11 @@ export default function App() {
   };
 
   const latestSeason = seasons.length ? seasons[seasons.length - 1] : null;
-  const canGoHome = !!(showDetail || staticPage || query || (latestSeason != null && season !== latestSeason));
+  const canGoHome = !!(showDetail || selected || staticPage || query || (latestSeason != null && season !== latestSeason));
 
   const goHome = useCallback(() => {
     setShowDetail(false);
+    setSelected(null);
     setStaticPage(null);
     setQuery("");
     if (latestSeason != null) setSeason(latestSeason);

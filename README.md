@@ -3,11 +3,11 @@
 Self-hosted podcast platform: drop a WAV, push, and get the whole thing around it — a production podcast website with player, search, transcripts, analytics, OG images, RSS, and a CDN-deployed site.
 
 **Demos:**
-- [English](https://coil-sample.lugassy.net)
+- [English](https://coil-demo.lugassy.net)
 - [Hebrew](https://podcast.lugassy.net) (RTL)
 
 <p align="center">
-  <a href=".github/screenshot.png"><img src=".github/screenshot.png" alt="coil screenshot" width="640"></a>
+  <video src=".github/demo.mp4" width="640" autoplay loop muted playsinline></video>
 </p>
 
 ## What It Does
@@ -167,7 +167,7 @@ Your content and config stay exactly as you left them.
 2. **`.gitattributes`** lists these files with `merge=ours` — local `git pull upstream main` silently keeps your version.
 3. **`npm install`** registers the `ours` merge driver via a postinstall hook.
 
-New `podcast.yaml` fields are announced in [GitHub Releases](https://github.com/mluggy/coil/releases) — add them to your own config if you want the feature; code uses safe defaults otherwise. For a reference config, see [mluggy/coil-sample](https://github.com/mluggy/coil-sample).
+New `podcast.yaml` fields are announced in [GitHub Releases](https://github.com/mluggy/coil/releases) — add them to your own config if you want the feature; code uses safe defaults otherwise. For a reference config, see [mluggy/coil-demo](https://github.com/mluggy/coil-demo).
 </details>
 
 ## Troubleshooting
@@ -240,7 +240,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for script breakdown, SSR verification, a
 
 Real-world podcasts running on coil:
 
-- **[coil-sample.lugassy.net](https://coil-sample.lugassy.net)** — English reference/demo site maintained by the coil author. [[Source](https://github.com/mluggy/coil-sample)]
+- **[coil-demo.lugassy.net](https://coil-demo.lugassy.net)** — English reference/demo site maintained by the coil author. [[Source](https://github.com/mluggy/coil-demo)]
 - **[podcast.lugassy.net](https://podcast.lugassy.net)** — Hebrew RTL podcast, AWS Transcribe + Gemini correction, migrated from Transistor. [[Source](https://github.com/mluggy/podcast)]
 
 Running coil? Open a PR adding your site (one line: link + what's interesting about your setup).

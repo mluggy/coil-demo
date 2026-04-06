@@ -200,22 +200,28 @@ TIKTOK_PIXEL_ID: ""
 SNAP_PIXEL_ID: ""
 
 # -- Fonts --
-# Google Fonts family name for body text.
+# Google Fonts family name for body text and OG images.
 # Browse https://fonts.google.com to pick a font.
-# For non-Latin scripts, use the appropriate Noto variant:
-#   Hebrew: "Noto Sans Hebrew"
-#   Arabic: "Noto Sans Arabic"
-#   Japanese: "Noto Sans JP"
-#   Chinese (Simplified): "Noto Sans SC"
-#   Korean: "Noto Sans KR"
-#   Thai: "Noto Sans Thai"
-font: Noto Sans Hebrew
+# The Regular (400) weight is auto-downloaded on first build and cached to
+# scripts/fonts/. Noto Sans Regular is bundled as the default.
+# Examples:
+#   font: Noto Sans              (default — bundled, no download needed)
+#   font: Inter
+#   font: Noto Sans Hebrew       (Hebrew/RTL)
+#   font: Noto Sans Arabic       (Arabic/RTL)
+#   font: Noto Sans JP           (Japanese)
+#   font: Noto Sans SC           (Chinese Simplified)
+#   font: Noto Sans KR           (Korean)
+#   font: Noto Sans Thai         (Thai)
+font: Noto Sans
 
 # -- OG image font (optional override) --
-# Satori (the OG image generator) needs a static .ttf file. By default the
-# font named above is downloaded from Google Fonts on first build and cached
-# to scripts/fonts/ - no config needed. Only set og_font to override with a
-# specific local .ttf (e.g. a custom weight/variant, or to skip the fetch).
+# By default, OG images use the font above (auto-downloaded from Google Fonts).
+# Set og_font to a local .ttf path to override — useful for custom weights,
+# variants, or fonts not on Google Fonts.
+# Examples:
+#   og_font: ""                              (default — uses font above)
+#   og_font: scripts/fonts/MyFont-Bold.ttf   (custom local .ttf)
 og_font: ""
 
 # -- OG image text area --
