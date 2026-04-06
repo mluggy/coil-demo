@@ -21,4 +21,5 @@ episodes/s1e1.srt              merge=ours
 episodes/s1e1.txt              merge=ours
 episodes/s1e1.png              merge=ours
 public/cover.png               merge=ours
+episodes/rss.xml               merge=ours
 wrangler.toml                  merge=ours

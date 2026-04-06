@@ -9,7 +9,7 @@
       <title>Your Podcast</title>
       <link>{{SITE_URL}}</link>
     </image>
-    <generator>Podcast Pipeline</generator>
+    <generator>coil — https://github.com/mluggy/coil</generator>
     <lastBuildDate>Mon, 06 Apr 2026 07:09:07 GMT</lastBuildDate>
     <atom:link href="{{SITE_URL}}/rss.xml" rel="self" type="application/rss+xml" />
     <author>Your Name</author>

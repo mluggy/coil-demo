@@ -287,7 +287,7 @@ def write_feed(episodes_dir, episodes, last_build, config):
     lines.append(f'      <title>{escape_xml(title)}</title>')
     lines.append(f'      <link>{site_url}</link>')
     lines.append('    </image>')
-    lines.append('    <generator>Podcast Pipeline</generator>')
+    lines.append('    <generator>coil — https://github.com/mluggy/coil</generator>')
     lines.append(f'    <lastBuildDate>{last_build}</lastBuildDate>')
     lines.append(f'    <atom:link href="{site_url}/rss.xml" rel="self" type="application/rss+xml" />')
     lines.append(f'    <author>{escape_xml(author)}</author>')
