@@ -112,6 +112,23 @@ Secrets live in **Settings → Secrets and variables → Actions → New reposit
 
 Note: transcription also requires `transcribe: true` in `podcast.yaml`.
 
+## Costs
+
+coil runs entirely on free tiers for most podcasts. Here's what each service costs beyond free:
+
+| Service | Free tier | Beyond free |
+|:---|:---|:---|
+| **Cloudflare Pages** | 500 builds/month | $5/month Pro plan |
+| **Cloudflare R2** | 10 GB storage, unlimited egress | $0.015/GB-month storage |
+| **GitHub Actions** | Unlimited for public repos; 2,000 min/month for private | ~$0.008/min |
+| **Git LFS** | 1 GB storage + 1 GB bandwidth/month | $5 per 50 GB data pack |
+| **AWS Transcribe** | 250,000 min free (first 12 months) | ~$0.024/min of audio |
+| **AWS S3** | 5 GB storage (first 12 months) | Negligible for staging |
+| **Google Gemini** | Free tier (generous) | See [pricing](https://ai.google.dev/pricing) |
+| **Custom domain** | Free on Cloudflare DNS (SSL included) | Domain registration ~$10–15/year |
+
+For a typical podcast (weekly episodes, < 1 hour each), everything stays well within free tiers — **total cost: $0/month**. The only service likely to exceed free limits is AWS Transcribe after the first year, at roughly $1.50 per hour of audio.
+
 ## Publishing to podcast directories
 
 After your first successful deploy, your site is at `https://your-pages-project.pages.dev` (or your custom domain). Your feed is at `/rss.xml`.
@@ -239,3 +256,7 @@ See [SECURITY.md](SECURITY.md).
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Support
+
+If coil is useful to you, consider [sponsoring the project](https://github.com/sponsors/mluggy).
