@@ -19,8 +19,8 @@ export function spotifyEpisodeUrl(spotifyId) {
 }
 
 export function amazonEpisodeUrl(amazonId) {
-  return amazonId
-    ? `https://music.amazon.com/podcasts/${amazonId}`
+  return amazonId && config.amazon_music_id
+    ? `https://music.amazon.com/podcasts/${config.amazon_music_id}/episodes/${amazonId}`
     : AMAZON_SHOW;
 }
 

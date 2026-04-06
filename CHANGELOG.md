@@ -2,6 +2,17 @@
 
 All notable changes to coil are documented here.
 
+## 1.0.1 — 2026-04-06
+
+### Fixed
+- Amazon Music episode deep links now use correct `/podcasts/{show}/episodes/{episode}` URL format.
+- RSS feed served with `application/rss+xml` Content-Type (was inheriting generic `application/xml` from Cloudflare Pages).
+- Explicit `Content-Type` headers for all URL-rewritten static files (sitemap.xml, llms.txt, robots.txt).
+
+### Changed
+- Analytics config keys in `podcast.yaml` renamed from UPPERCASE to lowercase for consistency (`ga_measurement_id`, `fb_pixel_id`, `x_pixel_id`, `linkedin_partner_id`, `clarity_project_id`, `microsoft_uet_id`, `tiktok_pixel_id`, `snap_pixel_id`). **Action required:** if you set any of these in your `podcast.yaml`, rename them to lowercase.
+- Typo fix: "previouslyTwitter" → "previously Twitter" in config comment.
+
 ## 1.0.0 — 2026-04-06
 
 Initial release.

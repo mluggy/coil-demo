@@ -20,42 +20,42 @@ function buildCsp() {
   const connectSrc = ["'self'"];
   const imgSrc = ["'self'", "data:"];
 
-  if (config.GA_MEASUREMENT_ID) {
+  if (config.ga_measurement_id) {
     scriptSrc.push("https://*.googletagmanager.com");
     connectSrc.push("https://*.google-analytics.com", "https://*.analytics.google.com", "https://*.googletagmanager.com");
     imgSrc.push("https://*.google-analytics.com", "https://*.googletagmanager.com");
   }
-  if (config.FB_PIXEL_ID) {
+  if (config.fb_pixel_id) {
     scriptSrc.push("https://connect.facebook.net");
     connectSrc.push("https://www.facebook.com");
     imgSrc.push("https://www.facebook.com");
   }
-  if (config.X_PIXEL_ID) {
+  if (config.x_pixel_id) {
     scriptSrc.push("https://static.ads-twitter.com");
     connectSrc.push("https://analytics.twitter.com");
     imgSrc.push("https://analytics.twitter.com", "https://t.co");
   }
-  if (config.LINKEDIN_PARTNER_ID) {
+  if (config.linkedin_partner_id) {
     scriptSrc.push("https://snap.licdn.com");
     connectSrc.push("https://px.ads.linkedin.com");
     imgSrc.push("https://px.ads.linkedin.com");
   }
-  if (config.CLARITY_PROJECT_ID) {
+  if (config.clarity_project_id) {
     scriptSrc.push("https://www.clarity.ms");
     connectSrc.push("https://www.clarity.ms");
     imgSrc.push("https://www.clarity.ms");
   }
-  if (config.MICROSOFT_UET_ID) {
+  if (config.microsoft_uet_id) {
     scriptSrc.push("https://bat.bing.com");
     connectSrc.push("https://bat.bing.com");
     imgSrc.push("https://bat.bing.com");
   }
-  if (config.TIKTOK_PIXEL_ID) {
+  if (config.tiktok_pixel_id) {
     scriptSrc.push("https://analytics.tiktok.com");
     connectSrc.push("https://analytics.tiktok.com");
     imgSrc.push("https://analytics.tiktok.com");
   }
-  if (config.SNAP_PIXEL_ID) {
+  if (config.snap_pixel_id) {
     scriptSrc.push("https://sc-static.net");
     connectSrc.push("https://tr.snapchat.com");
     imgSrc.push("https://tr.snapchat.com");
@@ -373,12 +373,21 @@ async function serveR2(env, key, request) {
 // rewritten per-request so the same artifact works on any hostname.
 const SITE_URL_REWRITES = new Set(["/rss.xml", "/sitemap.xml", "/llms.txt", "/robots.txt"]);
 
+const REWRITE_CONTENT_TYPES = {
+  "/rss.xml": "application/rss+xml; charset=utf-8",
+  "/sitemap.xml": "application/xml; charset=utf-8",
+  "/llms.txt": "text/plain; charset=utf-8",
+  "/robots.txt": "text/plain; charset=utf-8",
+};
+
 async function rewriteSiteUrl(request, next) {
   const resp = await next();
   const text = await resp.text();
   const baseUrl = getBaseUrl(request);
   const rewritten = text.replace(/\{\{SITE_URL\}\}/g, baseUrl);
   const headers = new Headers(resp.headers);
+  const path = new URL(request.url).pathname;
+  if (REWRITE_CONTENT_TYPES[path]) headers.set("Content-Type", REWRITE_CONTENT_TYPES[path]);
   headers.set("Content-Length", String(new TextEncoder().encode(rewritten).length));
   return new Response(rewritten, { status: resp.status, headers });
 }
