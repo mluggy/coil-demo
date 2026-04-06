@@ -1,5 +1,18 @@
+import config from "../utils/config.js";
+
+// Process {{#if KEY}}...{{/if}} conditionals in text against config
+function processConditionals(text) {
+  return (text || "")
+    .replace(/\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g, (_, key, content) =>
+      config[key] ? content : ""
+    )
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 export default function StaticPage({ title, text }) {
-  const paragraphs = (text || "")
+  const processed = processConditionals(text);
+  const paragraphs = processed
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);

@@ -30,6 +30,36 @@ function buildCsp() {
     connectSrc.push("https://www.facebook.com");
     imgSrc.push("https://www.facebook.com");
   }
+  if (config.X_PIXEL_ID) {
+    scriptSrc.push("https://static.ads-twitter.com");
+    connectSrc.push("https://analytics.twitter.com");
+    imgSrc.push("https://analytics.twitter.com", "https://t.co");
+  }
+  if (config.LINKEDIN_PARTNER_ID) {
+    scriptSrc.push("https://snap.licdn.com");
+    connectSrc.push("https://px.ads.linkedin.com");
+    imgSrc.push("https://px.ads.linkedin.com");
+  }
+  if (config.CLARITY_PROJECT_ID) {
+    scriptSrc.push("https://www.clarity.ms");
+    connectSrc.push("https://www.clarity.ms");
+    imgSrc.push("https://www.clarity.ms");
+  }
+  if (config.MICROSOFT_UET_ID) {
+    scriptSrc.push("https://bat.bing.com");
+    connectSrc.push("https://bat.bing.com");
+    imgSrc.push("https://bat.bing.com");
+  }
+  if (config.TIKTOK_PIXEL_ID) {
+    scriptSrc.push("https://analytics.tiktok.com");
+    connectSrc.push("https://analytics.tiktok.com");
+    imgSrc.push("https://analytics.tiktok.com");
+  }
+  if (config.SNAP_PIXEL_ID) {
+    scriptSrc.push("https://sc-static.net");
+    connectSrc.push("https://tr.snapchat.com");
+    imgSrc.push("https://tr.snapchat.com");
+  }
 
   return [
     `default-src 'self'`,
@@ -137,6 +167,16 @@ function getThemeFromCookie(request) {
   return match ? match[1] : config.default_theme || "dark";
 }
 
+// Process {{#if KEY}}...{{/if}} conditionals in label text against config
+function processConditionals(text) {
+  return (text || "")
+    .replace(/\{\{#if (\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g, (_, key, content) =>
+      config[key] ? content : ""
+    )
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 const L = config.labels;
 
 function buildEpisodeHtml(ep) {
@@ -207,7 +247,8 @@ function renderStaticPage(kind, request) {
   const themeColor = theme === "light" ? (config.bg_light || "#fafaf9") : (config.bg_dark || "#0a0a0b");
   const baseUrl = getBaseUrl(request);
   const title = kind === "terms" ? L.terms : L.privacy;
-  const text = kind === "terms" ? L.terms_text : L.privacy_text;
+  const rawText = kind === "terms" ? L.terms_text : L.privacy_text;
+  const text = processConditionals(rawText);
   const pageTitle = `${title} | ${config.title}`;
   const canonical = `${baseUrl}/${kind}`;
   const desc = esc(title);
