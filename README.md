@@ -2,12 +2,10 @@
 
 Self-hosted podcast platform: drop a WAV, push, and get the whole thing around it — a production podcast website with player, search, transcripts, analytics, OG images, RSS, and a CDN-deployed site.
 
-**Demos:**
-- [English](https://coil-demo.lugassy.net)
-- [Hebrew](https://podcast.lugassy.net) (RTL)
+**Demos:** [English](https://coil-demo.lugassy.net) [[Source](https://github.com/mluggy/coil-demo)] · [Hebrew](https://podcast.lugassy.net) (RTL) [[Source](https://github.com/mluggy/podcast)]
 
 <p align="center">
-  <video src=".github/demo.mp4" width="640" autoplay loop muted playsinline></video>
+  <video src="https://github.com/user-attachments/assets/6b80147b-cb2e-4240-9e39-1e2127092583" width="848" height="720" autoplay loop muted playsinline></video>
 </p>
 
 ## What It Does
@@ -235,15 +233,6 @@ npm run preview     # Full Cloudflare Pages runtime with middleware
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for script breakdown, SSR verification, and running pipeline stages by hand.
-
-## Examples
-
-Real-world podcasts running on coil:
-
-- **[coil-demo.lugassy.net](https://coil-demo.lugassy.net)** — English reference/demo site maintained by the coil author. [[Source](https://github.com/mluggy/coil-demo)]
-- **[podcast.lugassy.net](https://podcast.lugassy.net)** — Hebrew RTL podcast, AWS Transcribe + Gemini correction, migrated from Transistor. [[Source](https://github.com/mluggy/podcast)]
-
-Running coil? Open a PR adding your site (one line: link + what's interesting about your setup).
 
 ## Contributing
 
