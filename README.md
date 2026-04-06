@@ -249,6 +249,10 @@ Running coil? Open a PR adding your site (one line: link + what's interesting ab
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
+
 ## Security
 
 See [SECURITY.md](SECURITY.md).

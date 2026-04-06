@@ -84,6 +84,54 @@ function buildHeadTags(config) {
       lines.push(`<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${config.FB_PIXEL_ID}&ev=PageView&noscript=1"/></noscript>`);
     }
   }
+  if (config.X_PIXEL_ID) {
+    if (!consentGated) {
+      lines.push(`<link rel="preconnect" href="https://static.ads-twitter.com">`);
+    }
+    lines.push(
+      `<script>if(${consentOk}){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://static.ads-twitter.com';document.head.appendChild(pc);!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments)},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('init','${config.X_PIXEL_ID}');}</script>`,
+    );
+  }
+  if (config.LINKEDIN_PARTNER_ID) {
+    if (!consentGated) {
+      lines.push(`<link rel="preconnect" href="https://snap.licdn.com">`);
+    }
+    lines.push(
+      `<script>if(${consentOk}){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://snap.licdn.com';document.head.appendChild(pc);window._linkedin_partner_id='${config.LINKEDIN_PARTNER_ID}';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(window._linkedin_partner_id);!function(l){if(!l.getElementById('linkedin-insight')){var s=l.createElement('script');s.id='linkedin-insight';s.async=!0;s.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';var b=l.getElementsByTagName('script')[0];b.parentNode.insertBefore(s,b)}}(document);}</script>`,
+    );
+  }
+  if (config.CLARITY_PROJECT_ID) {
+    if (!consentGated) {
+      lines.push(`<link rel="preconnect" href="https://www.clarity.ms">`);
+    }
+    lines.push(
+      `<script>if(${consentOk}){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://www.clarity.ms';document.head.appendChild(pc);!function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)}(window,document,'clarity','script','${config.CLARITY_PROJECT_ID}');}</script>`,
+    );
+  }
+  if (config.MICROSOFT_UET_ID) {
+    if (!consentGated) {
+      lines.push(`<link rel="preconnect" href="https://bat.bing.com">`);
+    }
+    lines.push(
+      `<script>if(${consentOk}){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://bat.bing.com';document.head.appendChild(pc);!function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:'${config.MICROSOFT_UET_ID}'};o.q=w[u],w[u]=new UET(o)},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=='loaded'&&s!=='complete'||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)}(window,document,'script','https://bat.bing.com/bat.js','uetq');}</script>`,
+    );
+  }
+  if (config.TIKTOK_PIXEL_ID) {
+    if (!consentGated) {
+      lines.push(`<link rel="preconnect" href="https://analytics.tiktok.com">`);
+    }
+    lines.push(
+      `<script>if(${consentOk}){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://analytics.tiktok.com';document.head.appendChild(pc);!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=['page','track','identify','instances','debug','on','off','once','ready','alias','group','enableCookie','disableCookie'],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n){var i='https://analytics.tiktok.com/i18n/pixel/events.js';ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement('script');o.type='text/javascript',o.async=!0,o.src=i+'?sdkid='+e+'&lib='+t;var a=document.getElementsByTagName('script')[0];a.parentNode.insertBefore(o,a)};ttq.load('${config.TIKTOK_PIXEL_ID}')}(window,document,'ttq');}</script>`,
+    );
+  }
+  if (config.SNAP_PIXEL_ID) {
+    if (!consentGated) {
+      lines.push(`<link rel="preconnect" href="https://sc-static.net">`);
+    }
+    lines.push(
+      `<script>if(${consentOk}){var pc=document.createElement('link');pc.rel='preconnect';pc.href='https://sc-static.net';document.head.appendChild(pc);!function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};a.queue=[];var s=t.createElement('script');s.async=!0;s.src=n;var u=t.getElementsByTagName('script')[0];u.parentNode.insertBefore(s,u)}(window,document,'https://sc-static.net/scevent.min.js');snaptr('init','${config.SNAP_PIXEL_ID}',{});}</script>`,
+    );
+  }
   lines.push(`<script type="application/ld+json">${jsonLd}</script>`);
   // Inline theme init — reads cookie and applies data-theme before React hydrates (prevents FOUC)
   lines.push(`<script>!function(){try{var m=document.cookie.match(/(?:^|;\\s*)theme=(dark|light)/);var t=m?m[1]:"${config.default_theme||"dark"}";document.documentElement.setAttribute("data-theme",t);document.querySelector('meta[name=theme-color]').content=t==="light"?"${config.bg_light||"#fafaf9"}":"${config.bg_dark||"#0a0a0b"}"}catch(e){}}()</script>`);

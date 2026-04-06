@@ -163,16 +163,41 @@ transcribe: true
 # GEMINI_API_KEY is set and a new SRT was generated). Preview models are
 # updated often; if you see "model not found" errors, bump this to whatever
 # is current at https://ai.google.dev/gemini-api/docs/models
-gemini_model: gemini-3.1-pro-preview
+gemini_model: gemini-pro-latest
 
 # -- Analytics --
-# Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX).
+# Google Analytics 4 measurement ID (e.g. G-A1B2C3D4E5).
 # Leave empty to disable.
 GA_MEASUREMENT_ID: ""
 
-# Facebook/Meta Pixel ID (e.g. 123456789).
+# Facebook/Meta Pixel ID (e.g. 582193047164938).
 # Leave empty to disable.
 FB_PIXEL_ID: ""
+
+# X (previouslyTwitter) Pixel ID (e.g. o5lgk).
+# Leave empty to disable.
+X_PIXEL_ID: ""
+
+# LinkedIn Partner ID (e.g. 4873561).
+# Leave empty to disable.
+LINKEDIN_PARTNER_ID: ""
+
+# Microsoft Clarity Project ID (e.g. k7f3np2qxc).
+# Free heatmaps and session recordings.
+# Leave empty to disable.
+CLARITY_PROJECT_ID: ""
+
+# Microsoft UET Tag ID (e.g. 96385274).
+# Bing Ads conversion tracking. Leave empty to disable.
+MICROSOFT_UET_ID: ""
+
+# TikTok Pixel ID (e.g. CJMB5ABC87U6E7A0B1FG).
+# Leave empty to disable.
+TIKTOK_PIXEL_ID: ""
+
+# Snapchat Pixel ID (e.g. 8a3f5c92-b1d4-47e6-9f0a-2c8d7e6b4a1f).
+# Leave empty to disable.
+SNAP_PIXEL_ID: ""
 
 # -- Fonts --
 # Google Fonts family name for body text.
@@ -334,7 +359,15 @@ labels:
   privacy_text: |
     We respect your privacy. This site does not require an account and does not collect personal information you do not voluntarily provide. A small cookie stores your theme (light/dark) and, if shown, your cookie-consent choice.
 
-    If you accept analytics, Google Analytics sets cookies to measure aggregate, anonymized traffic such as pages viewed, session duration, and approximate region. The Meta (Facebook) Pixel records anonymized site activity for audience measurement.
+    If you accept analytics, we use the following third-party services to monitor anonymous traffic patterns and audience matching:
+    {{#if GA_MEASUREMENT_ID}}• Google Analytics — aggregate, anonymized traffic measurement{{/if}}
+    {{#if FB_PIXEL_ID}}• Meta (Facebook) Pixel — anonymized site activity for audience measurement{{/if}}
+    {{#if X_PIXEL_ID}}• X (Twitter) Pixel — audience matching and conversion tracking{{/if}}
+    {{#if LINKEDIN_PARTNER_ID}}• LinkedIn Insight Tag — audience matching and conversion tracking{{/if}}
+    {{#if CLARITY_PROJECT_ID}}• Microsoft Clarity — heatmaps and session recordings{{/if}}
+    {{#if MICROSOFT_UET_ID}}• Microsoft Advertising (UET) — conversion tracking{{/if}}
+    {{#if TIKTOK_PIXEL_ID}}• TikTok Pixel — audience matching and conversion tracking{{/if}}
+    {{#if SNAP_PIXEL_ID}}• Snapchat Pixel — audience matching and conversion tracking{{/if}}
 
     We do not sell data. You can revoke consent at any time by clearing cookies for this site. For questions contact the author.
 
