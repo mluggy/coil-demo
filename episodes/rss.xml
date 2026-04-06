@@ -10,7 +10,7 @@
       <link>{{SITE_URL}}</link>
     </image>
     <generator>coil — https://github.com/mluggy/coil</generator>
-    <lastBuildDate>Mon, 06 Apr 2026 08:02:52 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 08:09:16 GMT</lastBuildDate>
     <atom:link href="{{SITE_URL}}/rss.xml" rel="self" type="application/rss+xml" />
     <author>Your Name</author>
     <copyright>CC BY 4.0</copyright>
