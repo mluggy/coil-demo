@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "license": "MIT",
-  "homepage": "https://github.com/mluggy/coil#readme",
+  "homepage": "https://github.com/mluggy/coil",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mluggy/coil.git"
