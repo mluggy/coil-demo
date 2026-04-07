@@ -10,13 +10,13 @@
       <link>{{SITE_URL}}</link>
     </image>
     <generator>coil — https://github.com/mluggy/coil</generator>
-    <lastBuildDate>Tue, 07 Apr 2026 10:56:22 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 10:57:59 GMT</lastBuildDate>
     <atom:link href="{{SITE_URL}}/rss.xml" rel="self" type="application/rss+xml" />
     <author>Your Name</author>
     <copyright>CC BY 4.0</copyright>
     <language>en</language>
     <itunes:author>Your Name</itunes:author>
-    <itunes:summary>Your Podcast</itunes:summary>
+    <itunes:summary>A podcast about interesting things</itunes:summary>
     <itunes:type>episodic</itunes:type>
     <itunes:owner>
       <itunes:name>Your Name</itunes:name>
