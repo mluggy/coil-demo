@@ -387,6 +387,21 @@ const REWRITE_CONTENT_TYPES = {
   "/robots.txt": "text/plain; charset=utf-8",
 };
 
+const REWRITE_CACHE_CONTROL = {
+  "/rss.xml": "public, max-age=300, stale-while-revalidate=604800",
+  "/sitemap.xml": "public, max-age=3600, stale-while-revalidate=604800",
+  "/llms.txt": "public, max-age=3600, stale-while-revalidate=604800",
+};
+
+// Cache rules for static files served through middleware (mirrors _headers)
+const STATIC_CACHE_RULES = {
+  "/episodes.json": "public, max-age=60, stale-while-revalidate=604800",
+  "/search-index.json": "public, max-age=60, stale-while-revalidate=604800",
+  "/cover.png": "public, max-age=86400, stale-while-revalidate=604800",
+};
+
+const ASSETS_CACHE_CONTROL = "public, max-age=31536000, immutable";
+
 async function rewriteSiteUrl(request, next) {
   const resp = await next();
   const text = await resp.text();
@@ -395,6 +410,7 @@ async function rewriteSiteUrl(request, next) {
   const headers = new Headers(resp.headers);
   const path = new URL(request.url).pathname;
   if (REWRITE_CONTENT_TYPES[path]) headers.set("Content-Type", REWRITE_CONTENT_TYPES[path]);
+  if (REWRITE_CACHE_CONTROL[path]) headers.set("Cache-Control", REWRITE_CACHE_CONTROL[path]);
   headers.set("Content-Length", String(new TextEncoder().encode(rewritten).length));
   return new Response(rewritten, { status: resp.status, headers });
 }
@@ -410,7 +426,7 @@ export async function onRequest({ request, next, env }) {
     return rewriteSiteUrl(request, next);
   }
 
-  // Static assets: pass through to Pages
+  // Static assets: pass through to Pages with cache headers
   if (
     path.match(/\.\w{2,5}$/) ||
     path.startsWith("/assets/")
@@ -421,7 +437,16 @@ export async function onRequest({ request, next, env }) {
       const r2Response = await serveR2(env, key, request);
       if (r2Response) return r2Response;
     }
-    return next();
+    const resp = await next();
+    const cacheControl = path.startsWith("/assets/")
+      ? ASSETS_CACHE_CONTROL
+      : STATIC_CACHE_RULES[path];
+    if (cacheControl) {
+      const headers = new Headers(resp.headers);
+      headers.set("Cache-Control", cacheControl);
+      return new Response(resp.body, { status: resp.status, headers });
+    }
+    return resp;
   }
 
   // Old Transistor slugs: /episodes/slug-34-... → 301 to /34
