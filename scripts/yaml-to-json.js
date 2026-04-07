@@ -16,7 +16,9 @@ function spotifyUrl(id) {
   return id ? `https://open.spotify.com/episode/${id}` : "";
 }
 function amazonUrl(id) {
-  return id ? `https://music.amazon.com/podcasts/${id}` : "";
+  if (id && config.amazon_music_id) return `https://music.amazon.com/podcasts/${config.amazon_music_id}/episodes/${id}`;
+  if (id) return `https://music.amazon.com/podcasts/${id}`;
+  return "";
 }
 function youtubeUrl(videoId) {
   if (videoId && config.youtube_id) return `https://www.youtube.com/watch?v=${videoId}&list=${config.youtube_id}`;
