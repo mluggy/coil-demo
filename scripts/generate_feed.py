@@ -274,7 +274,6 @@ def write_feed(episodes_dir, episodes, last_build, config):
     lines.append('    <generator>coil — https://github.com/mluggy/coil</generator>')
     lines.append(f'    <lastBuildDate>{last_build}</lastBuildDate>')
     lines.append(f'    <atom:link href="{site_url}/rss.xml" rel="self" type="application/rss+xml" />')
-    lines.append(f'    <managingEditor>{escape_xml(author)}</managingEditor>')
     lines.append(f'    <copyright>{escape_xml(config.get("copyright", author))}</copyright>')
     lines.append(f'    <language>{language}</language>')
     lines.append(f'    <itunes:author>{escape_xml(author)}</itunes:author>')
