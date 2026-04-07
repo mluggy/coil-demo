@@ -1,0 +1,130 @@
+name: Coil Pipeline
+
+on:
+  push:
+    branches: ['*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  process:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Install ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: release
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      # ─── Read podcast config ──────────────────────────────
+
+      - name: Read podcast config
+        id: config
+        run: |
+          TRANSCRIBE=$(python -c "import yaml; c=yaml.safe_load(open('podcast.yaml')); print('true' if c.get('transcribe') else 'false')")
+          echo "transcribe=$TRANSCRIBE" >> $GITHUB_OUTPUT
+
+      # ─── Episode Processing (Python) ───────────────────────
+
+      - name: Convert WAV to MP3
+        run: |
+          CONVERTED=$(python scripts/convert_wav.py episodes/)
+          echo "converted<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONVERTED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        id: convert
+
+      - name: Transcribe MP3 to SRT
+        if: steps.config.outputs.transcribe == 'true' && env.AWS_ACCESS_KEY_ID != ''
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        run: |
+          NEW_SRTS=$(python scripts/transcribe.py episodes/)
+          echo "new_srts<<EOF" >> $GITHUB_OUTPUT
+          echo "$NEW_SRTS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        id: transcribe
+
+      - name: Fix SRT with Gemini
+        if: steps.transcribe.outputs.new_srts != '' && env.GEMINI_API_KEY != ''
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/fix_srt.py episodes/ --srt-files ${{ steps.transcribe.outputs.new_srts }}
+
+      - name: Regenerate RSS feed
+        run: |
+          python scripts/generate_feed.py episodes/
+
+      - name: Generate OG images
+        run: |
+          node scripts/yaml-to-json.js
+          node scripts/generate-og.js
+
+      # ─── Commit processed episodes ─────────────────────────
+
+      - name: Commit generated files
+        run: |
+          git config user.name "coil[bot]"
+          git config user.email "coil[bot]@users.noreply.github.com"
+          git add episodes/*.mp3 episodes/*.srt episodes/*.txt episodes/rss.xml episodes/episodes.yaml
+          git add episodes/*.png episodes/*.jpg 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "Auto-process episodes [skip ci]"
+          git add -u episodes/*.wav 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "Remove converted WAV files [skip ci]"
+          # Rebase on any new upstream commits (e.g. concurrent push races)
+          # before pushing. Fall back to a single retry on the push itself.
+          git pull --rebase origin "$GITHUB_REF_NAME" || true
+          git push || (git pull --rebase origin "$GITHUB_REF_NAME" && git push)
+
+      # ─── Website Build (Node.js) ───────────────────────────
+
+      - name: Build website
+        run: npm run build
+
+      # ─── Deploy ─────────────────────────────────────────────
+
+      - name: Sync media to Cloudflare R2
+        if: env.R2_ACCESS_KEY_ID != ''
+        env:
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT_URL: ${{ secrets.R2_ENDPOINT_URL }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+        run: |
+          python scripts/sync_r2.py episodes/
+
+      - name: Deploy to Cloudflare Pages
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx wrangler pages deploy dist --project-name="${{ vars.CLOUDFLARE_PROJECT_NAME || 'your-pages-project' }}"
