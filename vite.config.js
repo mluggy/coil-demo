@@ -153,6 +153,31 @@ export default defineConfig({
       },
     },
     {
+      name: "inline-css",
+      apply(_config, { command }) { return command === "build"; },
+      enforce: "post",
+      generateBundle(_, bundle) {
+        const cssAssets = [];
+        const htmlFiles = [];
+        for (const [fileName, chunk] of Object.entries(bundle)) {
+          if (fileName.endsWith(".css")) cssAssets.push({ fileName, source: chunk.source });
+          if (fileName.endsWith(".html")) htmlFiles.push(chunk);
+        }
+        for (const html of htmlFiles) {
+          let src = html.source;
+          for (const css of cssAssets) {
+            const escaped = css.fileName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            src = src.replace(
+              new RegExp(`<link[^>]+href="/[^"]*${escaped}"[^>]*>`),
+              `<style>${css.source}</style>`,
+            );
+            delete bundle[css.fileName];
+          }
+          html.source = src;
+        }
+      },
+    },
+    {
       name: "watch-config-and-episodes",
       apply(_config, { command }) { return command === "serve" && !process.env.VITEST; },
       configureServer(server) {
@@ -234,5 +259,6 @@ export default defineConfig({
   build: {
     outDir: "dist",
     assetsDir: "assets",
+    modulePreload: { polyfill: false },
   },
 });
