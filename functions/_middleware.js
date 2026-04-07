@@ -320,6 +320,17 @@ function renderPage(episode, request) {
   <meta name="twitter:card" content="summary_large_image">${config.x_username ? `\n  <meta name="twitter:site" content="@${config.x_username}">` : ""}
   <script type="application/ld+json">${jsonLd}</script>`;
 
+  // Preload episode resources so the browser fetches them in parallel with
+  // the JS bundle instead of waiting for React to request them.
+  let preloadHints = "";
+  if (episode) {
+    const txtFile = episode.audioFile.replace(".mp3", ".txt");
+    preloadHints += `\n  <link rel="preload" href="/${txtFile}" as="fetch" crossorigin>`;
+    if (episode.hasSrt) {
+      preloadHints += `\n  <link rel="preload" href="/${episode.srtFile}" as="fetch" crossorigin>`;
+    }
+  }
+
   const nonce = crypto.randomUUID();
   const html = template
     .replace("<!--OG_TAGS-->", ogTags)
@@ -327,6 +338,7 @@ function renderPage(episode, request) {
     .replace("__SEARCH_JSON__", "null")
     .replace("__SSR_CONTENT__", buildSsrContent(episode))
     .replace(/<html\b/, `<html data-theme="${theme}"`)
+    .replace("</head>", `${preloadHints}\n  </head>`)
     .replace(/\{\{CSP_NONCE\}\}/g, nonce);
 
   const headers = new Headers({
