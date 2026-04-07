@@ -387,8 +387,6 @@ export default function App() {
             ) : (
               <span>{config.title}</span>
             )}
-            <span style={{ margin: "0 8px" }}>&middot;</span>
-            <span>{config.copyright}</span>
             {config.x_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
             <a href={config.x_url} target="_blank" rel="noopener" aria-label="X" onClick={() => trackExternalClick("twitter", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-dim)"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
