@@ -1,0 +1,53 @@
+{
+  "name": "coil",
+  "version": "1.0.0",
+  "description": "Self-hosted podcast platform. Drop a WAV, push, get a podcast.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "homepage": "https://github.com/mluggy/coil",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mluggy/coil.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mluggy/coil/issues"
+  },
+  "keywords": [
+    "podcast",
+    "rss",
+    "cloudflare-pages",
+    "cloudflare-r2",
+    "self-hosted",
+    "aws-transcribe",
+    "gemini"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "node scripts/build-all.js",
+    "preview": "node scripts/stage-preview.js && wrangler pages dev dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "postinstall": "git config merge.ours.driver true 2>/dev/null || true"
+  },
+  "dependencies": {
+    "@orama/highlight": "^0.1.9",
+    "@orama/orama": "^3.1.18",
+    "@phosphor-icons/react": "^2.1.10",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "js-yaml": "^4.1.0",
+    "opentype.js": "^1.3.4",
+    "satori": "^0.12.0",
+    "vite": "^6.0.0",
+    "vitest": "^4.1.2",
+    "wrangler": "^4.80.0"
+  }
+}

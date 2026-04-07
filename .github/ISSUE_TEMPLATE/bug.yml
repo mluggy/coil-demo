@@ -1,0 +1,48 @@
+name: Bug report
+description: Something is broken
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands or actions.
+      placeholder: |
+        1. Run `npm run build`
+        2. Open `dist/index.html`
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: coil commit / version
+      description: "`git rev-parse HEAD` or the tag you're on."
+    validations:
+      required: false
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did this happen?
+      options:
+        - Local development (`npm run dev` or `npm run preview`)
+        - GitHub Actions pipeline
+        - Deployed Cloudflare Pages site
+        - Python scripts (convert_wav / transcribe / fix_srt / generate_feed)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / output
+      render: shell
+    validations:
+      required: false

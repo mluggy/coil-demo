@@ -1,0 +1,30 @@
+import { execSync } from "child_process";
+import { copyFileSync, mkdirSync } from "fs";
+
+const steps = [
+  { label: "yaml-to-json", cmd: "node scripts/yaml-to-json.js" },
+  { label: "generate-og", cmd: "node scripts/generate-og.js" },
+  { label: "generate-feed", cmd: "python scripts/generate_feed.py episodes/" },
+  {
+    label: "copy-rss-to-public",
+    fn: () => {
+      // episodes/rss.xml is the committed canonical feed. Copy it into
+      // public/ so Vite bundles it into dist/ for Cloudflare Pages to serve.
+      mkdirSync("public", { recursive: true });
+      copyFileSync("episodes/rss.xml", "public/rss.xml");
+    },
+  },
+  { label: "generate-sitemap", cmd: "node scripts/generate-sitemap.js" },
+  { label: "generate-llms", cmd: "node scripts/generate-llms.js" },
+  { label: "vite build", cmd: "npx vite build" },
+  { label: "generate-html-template", cmd: "node scripts/generate-html-template.js" },
+];
+
+for (let i = 0; i < steps.length; i++) {
+  const { label, cmd, fn } = steps[i];
+  console.log(`\nStep ${i + 1}/${steps.length}: ${label}`);
+  if (fn) fn();
+  else execSync(cmd, { stdio: "inherit" });
+}
+
+console.log("\nBuild complete!");

@@ -1,0 +1,25 @@
+# LFS tracking for audio files
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+
+# ─── Frozen files (user-owned) ──────────────────────────────
+# These files ship at v1.0 and are never edited upstream again.
+# On merge from upstream, the `ours` driver silently keeps the user's
+# version, so your customizations survive every `git pull upstream main`.
+#
+# The `ours` driver is registered automatically by `npm install`
+# (see the postinstall script in package.json). If you skip npm install,
+# git falls back to a standard 3-way merge — you'll see normal conflict
+# markers and can resolve manually.
+#
+# See CONTRIBUTING.md for the freeze contract and enforcement details.
+
+podcast.yaml                   merge=ours
+episodes/episodes.yaml         merge=ours
+episodes/*.mp3                 merge=ours
+episodes/*.srt                 merge=ours
+episodes/*.txt                 merge=ours
+episodes/*.png                 merge=ours
+public/cover.png               merge=ours
+episodes/rss.xml               merge=ours
+wrangler.toml                  merge=ours
