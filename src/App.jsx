@@ -389,31 +389,31 @@ export default function App() {
             )}
             {config.x_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
-            <a href={config.x_url} target="_blank" rel="noopener" aria-label="X" onClick={() => trackExternalClick("twitter", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-dim)"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
+            <a href={config.x_url} target="_blank" rel="noopener" aria-label="X" onClick={() => trackExternalClick("twitter", "footer")} style={{ color: "var(--text-faint)", display: "flex", alignItems: "center", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-dim)"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
               <XLogo size={14} />
             </a>
             </>)}
             {config.linkedin_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
-            <a href={config.linkedin_url} target="_blank" rel="noopener" aria-label="LinkedIn" onClick={() => trackExternalClick("linkedin", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-dim)"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
+            <a href={config.linkedin_url} target="_blank" rel="noopener" aria-label="LinkedIn" onClick={() => trackExternalClick("linkedin", "footer")} style={{ color: "var(--text-faint)", display: "flex", alignItems: "center", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-dim)"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
               <LinkedinLogo size={14} />
             </a>
             </>)}
             {config.facebook_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
-            <a href={config.facebook_url} target="_blank" rel="noopener" aria-label="Facebook" onClick={() => trackExternalClick("facebook", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#1877F2"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
+            <a href={config.facebook_url} target="_blank" rel="noopener" aria-label="Facebook" onClick={() => trackExternalClick("facebook", "footer")} style={{ color: "var(--text-faint)", display: "flex", alignItems: "center", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#1877F2"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
               <FacebookLogo size={14} />
             </a>
             </>)}
             {config.instagram_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
-            <a href={config.instagram_url} target="_blank" rel="noopener" aria-label="Instagram" onClick={() => trackExternalClick("instagram", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#E4405F"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
+            <a href={config.instagram_url} target="_blank" rel="noopener" aria-label="Instagram" onClick={() => trackExternalClick("instagram", "footer")} style={{ color: "var(--text-faint)", display: "flex", alignItems: "center", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#E4405F"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
               <InstagramLogo size={14} />
             </a>
             </>)}
             {config.tiktok_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
-            <a href={config.tiktok_url} target="_blank" rel="noopener" aria-label="TikTok" onClick={() => trackExternalClick("tiktok", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#00F2EA"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
+            <a href={config.tiktok_url} target="_blank" rel="noopener" aria-label="TikTok" onClick={() => trackExternalClick("tiktok", "footer")} style={{ color: "var(--text-faint)", display: "flex", alignItems: "center", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#00F2EA"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
               <TiktokLogo size={14} />
             </a>
             </>)}
@@ -437,7 +437,7 @@ export default function App() {
             </>)}
             {config.funding_url && (<>
             <span style={{ margin: "0 8px" }}>&middot;</span>
-            <a href={config.funding_url} target="_blank" rel="noopener" aria-label={config.labels.funding || "Support"} onClick={() => trackExternalClick("funding", "footer")} style={{ color: "var(--text-faint)", display: "flex", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#db2777"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
+            <a href={config.funding_url} target="_blank" rel="noopener" aria-label={config.labels.funding || "Support"} onClick={() => trackExternalClick("funding", "footer")} style={{ color: "var(--text-faint)", display: "flex", alignItems: "center", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#db2777"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-faint)"; }}>
               <Heart size={14} weight="fill" />
             </a>
             </>)}
