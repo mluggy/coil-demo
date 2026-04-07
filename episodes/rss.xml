@@ -10,9 +10,9 @@
       <link>{{SITE_URL}}</link>
     </image>
     <generator>coil — https://github.com/mluggy/coil</generator>
-    <lastBuildDate>Tue, 07 Apr 2026 12:25:58 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 13:10:34 GMT</lastBuildDate>
     <atom:link href="{{SITE_URL}}/rss.xml" rel="self" type="application/rss+xml" />
-    <author>Your Name</author>
+    <managingEditor>Your Name</managingEditor>
     <copyright>CC BY 4.0</copyright>
     <language>en</language>
     <itunes:author>Your Name</itunes:author>
@@ -22,7 +22,7 @@
       <itunes:name>Your Name</itunes:name>
       <itunes:email>you@example.com</itunes:email>
     </itunes:owner>
-    <itunes:explicit>false</itunes:explicit>
+    <itunes:explicit>no</itunes:explicit>
     <itunes:category text="Technology" />
     <itunes:image href="{{SITE_URL}}/cover.png" />
     <podcast:locked owner="you@example.com">yes</podcast:locked>
@@ -37,7 +37,7 @@
       <pubDate>Sat, 04 Apr 2026 16:02:30 GMT</pubDate>
       <enclosure url="{{SITE_URL}}/s1e1.mp3" length="363976" type="audio/mpeg" />
       <itunes:summary>This is a demo episode shipped with coil to show how things work. Replace it with your own content — drop a WAV file and push!</itunes:summary>
-      <itunes:explicit>false</itunes:explicit>
+      <itunes:explicit>no</itunes:explicit>
       <itunes:duration>00:20</itunes:duration>
       <itunes:image href="{{SITE_URL}}/s1e1.png" />
       <itunes:season>1</itunes:season>
