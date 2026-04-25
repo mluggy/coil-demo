@@ -494,9 +494,6 @@ export async function onRequest({ request, next, env }) {
     return renderPage(null, request);
   }
 
-  // Catch-all: 404
-  return new Response("Not Found", {
-    status: 404,
-    headers: { "Content-Type": "text/plain" },
-  });
+  // Catch-all: 301 to home
+  return redirect301("/");
 }
