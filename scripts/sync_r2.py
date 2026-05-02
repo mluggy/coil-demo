@@ -15,6 +15,7 @@ from shared import validate_env_vars
 EXTENSIONS = {
     ".mp3": "audio/mpeg",
     ".srt": "application/x-subrip",
+    ".txt": "text/plain; charset=utf-8",
     ".jpg": "image/jpeg",
     ".png": "image/png",
     ".xml": "application/rss+xml",

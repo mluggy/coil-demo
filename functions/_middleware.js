@@ -4,11 +4,12 @@ import config from "./_config.js";
 
 const BOTS = /googlebot|google-inspectiontool|bingbot|yandex|baiduspider|twitterbot|facebookexternalhit|linkedinbot|slackbot-linkexpanding|discordbot|whatsapp|telegrambot|applebot|pinterestbot|semrushbot|ahrefsbot|mj12bot|dotbot|petalbot|bytespider|gptbot|chatgpt-user|oai-searchbot|anthropic-ai|claudebot|ccbot/i;
 
-const MEDIA_PATTERN = /\.(mp3|srt|png|jpg)$/i;
+const MEDIA_PATTERN = /\.(mp3|srt|txt|png|jpg)$/i;
 
 const CONTENT_TYPES = {
   mp3: "audio/mpeg",
   srt: "application/x-subrip",
+  txt: "text/plain; charset=utf-8",
   jpg: "image/jpeg",
   png: "image/png",
   xml: "application/rss+xml",
