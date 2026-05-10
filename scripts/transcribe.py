@@ -38,7 +38,7 @@ def main():
         config = {}
     lang = config.get("language", "en")
     country = config.get("country", "US")
-    transcribe_languages = [f"{lang}-{country}"]
+    transcribe_language_code = f"{lang}-{country}"
 
     aws_region = os.environ["AWS_REGION"]
     bucket = os.environ["AWS_S3_BUCKET"]
@@ -67,8 +67,7 @@ def main():
             transcribe_client.start_transcription_job(
                 TranscriptionJobName=job_name,
                 Media={"MediaFileUri": s3_uri},
-                IdentifyLanguage=True,
-                LanguageOptions=transcribe_languages,
+                LanguageCode=transcribe_language_code,
                 Subtitles={"Formats": ["srt"], "OutputStartIndex": 1},
             )
 
