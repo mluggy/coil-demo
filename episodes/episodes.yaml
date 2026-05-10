@@ -28,6 +28,7 @@ episodes:
     size: 363976
     season: 1
     title: Welcome to coil
+    date: "2026-04-04"
     description: >-
       This is a demo episode shipped with coil to show how things work.
       Replace it with your own content — drop a WAV file and push!

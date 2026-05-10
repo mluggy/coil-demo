@@ -10,7 +10,7 @@
       <link>{{SITE_URL}}</link>
     </image>
     <generator>coil — https://github.com/mluggy/coil</generator>
-    <lastBuildDate>Tue, 07 Apr 2026 13:22:14 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 08:30:19 GMT</lastBuildDate>
     <atom:link href="{{SITE_URL}}/rss.xml" rel="self" type="application/rss+xml" />
     <copyright>CC BY 4.0</copyright>
     <language>en</language>
@@ -29,11 +29,11 @@
     <podcast:funding url="https://github.com/sponsors/mluggy">Support this podcast</podcast:funding>
     <podcast:publisher>Your Name</podcast:publisher>
     <item>
-      <title>Episode 1: Welcome to coil</title>
+      <title>Welcome to coil</title>
       <description>This is a demo episode shipped with coil to show how things work. Replace it with your own content — drop a WAV file and push!</description>
       <link>{{SITE_URL}}/1</link>
       <guid isPermaLink="false">s1e1</guid>
-      <pubDate>Sat, 04 Apr 2026 16:02:30 GMT</pubDate>
+      <pubDate>Sat, 04 Apr 2026 00:00:00 GMT</pubDate>
       <enclosure url="{{SITE_URL}}/s1e1.mp3" length="363976" type="audio/mpeg" />
       <itunes:summary>This is a demo episode shipped with coil to show how things work. Replace it with your own content — drop a WAV file and push!</itunes:summary>
       <itunes:explicit>no</itunes:explicit>
