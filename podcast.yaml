@@ -162,6 +162,11 @@ tiktok_username: ""
 # (e.g. "https://www.linkedin.com/in/mluggy/").
 linkedin_url: ""
 
+# Full URL to the show's GitHub repo (e.g. "https://github.com/mluggy/coil").
+# Added to JSON-LD `sameAs` and to AGENTS.md so coding agents can find the
+# source. Helps orank/agent-readiness scanners locate AGENTS.md / .cursorrules.
+github_url: "https://github.com/mluggy/coil"
+
 # -- Player defaults --
 # Initial playback speed when a listener first visits the site. They can
 # change it via the speed button; their choice is saved in localStorage.
