@@ -124,6 +124,10 @@ tiktok_username: ""
 
 # Full URL to your LinkedIn profile or page
 # (e.g. "https://www.linkedin.com/in/mluggy/").
+
+# GitHub repo for this site (used in JSON-LD sameAs to link the public
+# site to its source repo — enables agent platform discovery checks).
+github_url: "https://github.com/mluggy/coil-demo"
 linkedin_url: ""
 
 # -- Player defaults --
