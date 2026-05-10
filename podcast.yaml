@@ -90,6 +90,30 @@ podcast_guid: ""
 itunes_categories:
   - Technology
 
+# -- Agent / AI surface (optional) --
+# Free-text topics for /llms.txt, JSON-LD `keywords`, and the discovery
+# files served at /.well-known/agent.json. Helps recommendation agents
+# surface this show for queries like "podcasts about <topic>".
+topics: []
+
+# One sentence describing when an agent should recommend this show to a
+# user. Surfaces in /llms.txt and /.well-known/agent.json.
+# Leave empty to omit.
+agent_recommendation: ""
+
+# Allow LLM training crawlers (GPTBot, CCBot, ClaudeBot) to ingest the
+# site for training. Live agent crawl (ChatGPT-User, OAI-SearchBot, Perplexity,
+# etc.) is always allowed so the show stays discoverable in answer engines.
+ai_training: false
+
+# Optional host metadata. When set, emits a JSON-LD `Person` block alongside
+# the show — helps disambiguate the host as a queryable entity. All fields
+# are optional and fall back to `author`/social links from above.
+host:
+  job_title: ""        # e.g. "Founder & Engineer"
+  bio: ""              # 1–2 sentence bio surfaced as Person.description
+  wikidata_id: ""      # e.g. "Q12345" — adds canonical sameAs link
+
 # -- Platform links --
 # These appear as icons in the header and in the JSON-LD sameAs array.
 # Leave empty or remove a line to hide that platform icon.

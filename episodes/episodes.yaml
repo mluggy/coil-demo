@@ -4,7 +4,7 @@
 # Each key is the episode number (used as the episode ID and URL slug).
 # Required fields: season, title.
 # Optional: description, date, duration, size, guid, spotify_id, apple_id,
-#           youtube_id, amazon_id.
+#           youtube_id, amazon_id, guests, topics, chapters.
 #
 # guid: Custom RSS GUID for this episode. If omitted, auto-generated as
 #   {podcast_guid first 8 chars}-s{season}e{episode}. Set this when migrating
@@ -13,6 +13,14 @@
 #   conversion or from the MP3 itself). size is the MP3 byte length, used
 #   for the RSS <enclosure length> attribute.
 # Platform IDs enable deep-linking to the episode on each platform.
+#
+# guests:    list of strings (or {name, url}). Emitted as JSON-LD `actor`
+#            so agents answering "who was on episode N" can resolve.
+# topics:    list of strings. Emitted as JSON-LD `about` and listed under
+#            the episode in /episodes/llms.txt — helps "podcast about X"
+#            queries find this episode.
+# chapters:  list of {start: "MM:SS", title: "..."} entries. Surfaced as
+#            <ul> in SSR and as JSON-LD `hasPart`.
 
 episodes:
   1:
